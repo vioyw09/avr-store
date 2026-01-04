@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AVR Footwear & Apparel</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+body{background:#f8f9fa;color:#333;line-height:1.5}
+header{background:white;position:fixed;top:0;width:100%;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.08);padding:15px 0}
+.header-content{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:1.5rem;font-weight:bold;color:#1a1a1a;text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo i{color:#e74c3c}
+nav{display:flex;gap:30px}
+nav a{text-decoration:none;color:#555;font-weight:500;padding:8px 0;position:relative;transition:color 0.3s}
+nav a:hover,nav a.active{color:#e74c3c}
+nav a.active::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:2px;background:#e74c3c;border-radius:2px}
+.cart-icon{position:relative;background:#f3f4f6;width:45px;height:45px;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.3s}
+.cart-icon:hover{background:#e5e7eb;transform:translateY(-2px)}
+.cart-count{position:absolute;top:-5px;right:-5px;background:#e74c3c;color:white;width:22px;height:22px;border-radius:50%;font-size:0.8rem;display:flex;align-items:center;justify-content:center;font-weight:600}
+.mobile-menu-btn{display:none;background:none;border:none;font-size:1.5rem;color:#555;cursor:pointer}
+section{padding:100px 20px;max-width:1200px;margin:0 auto}
+#beranda{min-height:100vh;display:flex;align-items:center;background:linear-gradient(135deg,#f8f9fa 0%,#e9ecef 100%);border-radius:0 0 30px 30px;margin-top:70px}
+.hero-content{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.hero-text h1{font-size:2.8rem;margin-bottom:20px;color:#1a1a1a;line-height:1.2}
+.hero-text h1 span{color:#e74c3c}
+.hero-text p{font-size:1.1rem;color:#666;margin-bottom:30px;max-width:500px}
+.hero-image{text-align:center}
+.hero-img{width:100%;max-width:500px;border-radius:20px;box-shadow:0 20px 40px rgba(0,0,0,0.1)}
+.btn{display:inline-block;background:#e74c3c;color:white;padding:14px 28px;border-radius:8px;text-decoration:none;font-weight:600;font-size:1rem;border:none;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 12px rgba(231,76,60,0.2)}
+.btn:hover{background:#c0392b;transform:translateY(-3px);box-shadow:0 8px 20px rgba(231,76,60,0.3)}
+.section-title{text-align:center;margin-bottom:50px}
+.section-title h2{font-size:2.5rem;color:#1a1a1a;margin-bottom:15px}
+.section-title p{color:#666;font-size:1.1rem;max-width:600px;margin:0 auto}
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:30px}
+.product-card{background:white;border-radius:15px;overflow:hidden;box-shadow:0 5px 15px rgba(0,0,0,0.08);transition:transform 0.3s;border:1px solid #f0f0f0}
+.product-card:hover{transform:translateY(-10px);box-shadow:0 15px 30px rgba(0,0,0,0.1)}
+.product-img{height:220px;background:#f8f9fa;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.product-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s}
+.product-card:hover .product-img img{transform:scale(1.05)}
+.product-info{padding:20px}
+.product-name{font-size:1.2rem;font-weight:600;margin-bottom:10px;color:#1a1a1a;min-height:50px}
+.product-price{font-size:1.4rem;font-weight:bold;color:#e74c3c;margin-bottom:15px}
+.product-actions{display:flex;gap:10px}
+.btn-chat{flex:1;padding:12px;background:#3498db;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;transition:background 0.3s}
+.btn-chat:hover{background:#2980b9}
+.btn-buy{flex:1;padding:12px;background:#e74c3c;color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;transition:background 0.3s}
+.btn-buy:hover{background:#c0392b}
+.order-popup{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:30px;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.2);z-index:1000;width:90%;max-width:400px;animation:fadeIn 0.3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translate(-50%,-60%)}to{opacity:1;transform:translate(-50%,-50%)}}
+.popup-header{text-align:center;margin-bottom:20px}
+.popup-header i{font-size:3rem;color:#2ecc71;margin-bottom:15px}
+.popup-header h3{color:#1a1a1a;font-size:1.5rem}
+.order-details{background:#f8f9fa;padding:20px;border-radius:10px;margin-bottom:20px}
+.detail-row{display:flex;justify-content:space-between;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #e0e0e0}
+.detail-row:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.detail-label{font-weight:500;color:#666}
+.detail-value{font-weight:600;color:#1a1a1a}
+.order-total{display:flex;justify-content:space-between;font-size:1.2rem;font-weight:bold;color:#e74c3c;margin-top:15px;padding-top:15px;border-top:2px solid #e0e0e0}
+.order-message{text-align:center;color:#2ecc71;font-weight:600;margin-top:20px;padding:15px;background:#f0f9f0;border-radius:8px;border:1px solid #c8e6c9}
+.popup-close{position:absolute;top:15px;right:15px;background:none;border:none;font-size:1.5rem;color:#999;cursor:pointer;padding:5px}
+.popup-close:hover{color:#e74c3c}
+.overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:999}
+#chatbot-btn{position:fixed;bottom:25px;right:25px;background:#e74c3c;color:white;border:none;padding:14px 20px;border-radius:50px;cursor:pointer;font-size:14px;font-weight:500;box-shadow:0 3px 15px rgba(231,76,60,0.3);z-index:1000;display:flex;align-items:center;gap:8px}
+#chatbot-btn:hover{background:#c0392b;transform:translateY(-2px);box-shadow:0 5px 20px rgba(231,76,60,0.4)}
+#chatbot-box{position:fixed;bottom:80px;right:25px;width:350px;height:500px;background:white;border-radius:15px;box-shadow:0 5px 25px rgba(0,0,0,0.15);display:none;flex-direction:column;overflow:hidden;z-index:1001;border:1px solid #ddd}
+#chat-header{background:#e74c3c;color:white;padding:20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.1)}
+#chat-body{padding:20px;height:370px;overflow-y:auto;font-size:14px;background:#fafafa;flex:1}
+#chat-input{display:flex;padding:15px;gap:10px;background:white;border-top:1px solid #e0e0e0}
+#chat-input input{flex:1;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:14px}
+#chat-input input:focus{outline:none;border-color:#e74c3c}
+#chat-input button{background:#e74c3c;border:none;color:white;padding:12px 20px;border-radius:8px;cursor:pointer;font-weight:500;transition:background 0.3s}
+#chat-input button:hover{background:#c0392b}
+.bot-msg,.user-msg{margin:10px 0;display:flex}
+.bot-msg div{background:white;padding:12px 16px;border-radius:12px 12px 12px 0;max-width:80%;color:#333;line-height:1.4;border:1px solid #e0e0e0;box-shadow:0 2px 5px rgba(0,0,0,0.05)}
+.user-msg{justify-content:flex-end}
+.user-msg div{background:#e74c3c;color:white;padding:12px 16px;border-radius:12px 12px 0 12px;max-width:80%;line-height:1.4;box-shadow:0 2px 5px rgba(231,76,60,0.2)}
+.quick-questions{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.quick-questions button{padding:8px 14px;font-size:12px;background:white;border:1px solid #ddd;border-radius:20px;cursor:pointer;color:#666;transition:all 0.3s}
+.quick-questions button:hover{background:#e74c3c;color:white;border-color:#e74c3c}
+.admin-contact{background:#fff3cd;border:1px solid #ffeaa7;padding:12px;border-radius:8px;margin-top:15px;font-size:13px;color:#856404}
+.admin-contact a{color:#e74c3c;font-weight:600;text-decoration:none}
+.admin-contact a:hover{text-decoration:underline}
+.chat-time{font-size:11px;color:#999;text-align:center;margin:5px 0}
+.close-btn{background:none;border:none;color:white;font-size:20px;cursor:pointer;padding:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+.close-btn:hover{background:rgba(255,255,255,0.1);border-radius:50%}
+footer{background:#1a1a1a;color:white;padding:60px 20px 20px;text-align:center;margin-top:80px;border-radius:30px 30px 0 0}
+.footer-content{max-width:1200px;margin:0 auto}
+.copyright{margin-top:30px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1);color:#999;font-size:0.9rem}
+@media(max-width:992px){.hero-content{grid-template-columns:1fr;text-align:center}.hero-text p{margin:0 auto 30px}}
+@media(max-width:768px){nav{display:none;flex-direction:column;position:fixed;top:70px;left:0;width:100%;background:white;padding:20px;box-shadow:0 10px 20px rgba(0,0,0,0.1);z-index:99}nav.active{display:flex}.mobile-menu-btn{display:block}.hero-text h1{font-size:2.2rem}.section-title h2{font-size:2rem}.products-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px}#chatbot-box{width:90%;right:5%}}
+@media(max-width:480px){.products-grid{grid-template-columns:1fr}.product-actions{flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+<div class="header-content">
+<a href="#beranda" class="logo"><i class="fas fa-shoe-prints"></i>AVR Footwear & Apparel</a>
+<button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+<nav id="mainNav">
+<a href="#beranda" class="active">Beranda</a>
+<a href="#sepatu">Sepatu</a>
+<a href="#apparel">Apparel</a>
+<a href="#tentang">Tentang</a>
+</nav>
+<div class="cart-icon" id="cartBtn"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCount">0</span></div>
+</div>
+</header>
+<section id="beranda">
+<div class="hero-content">
+<div class="hero-text">
+<h1>Kualitas Premium <span>Sepatu & Apparel</span></h1>
+<p>Dapatkan koleksi terbaru sepatu dan apparel dengan kualitas premium dan harga terjangkau. Style tanpa kompromi.</p>
+<a href="#sepatu" class="btn">Lihat Koleksi</a>
+</div>
+<div class="hero-image">
+<img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Sepatu Premium" class="hero-img">
+</div>
+</div>
+</section>
+<section id="sepatu">
+<div class="section-title">
+<h2>Koleksi Sepatu</h2>
+<p>Pilih sepatu terbaik untuk gaya dan kenyamanan Anda</p>
+</div>
+<div class="products-grid" id="shoesGrid"></div>
+</section>
+<section id="apparel">
+<div class="section-title">
+<h2>Koleksi Apparel</h2>
+<p>Lengkapi penampilan dengan apparel terbaik kami</p>
+</div>
+<div class="products-grid" id="apparelGrid"></div>
+</section>
+<div class="overlay" id="overlay"></div>
+<div class="order-popup" id="orderPopup">
+<button class="popup-close" onclick="closeOrderPopup()">&times;</button>
+<div class="popup-header">
+<i class="fas fa-check-circle"></i>
+<h3>Pesanan Berhasil!</h3>
+</div>
+<div class="order-details">
+<div class="detail-row">
+<span class="detail-label">Produk:</span>
+<span class="detail-value" id="popupProduct">-</span>
+</div>
+<div class="detail-row">
+<span class="detail-label">Warna:</span>
+<span class="detail-value" id="popupColor">-</span>
+</div>
+<div class="detail-row">
+<span class="detail-label">Ukuran:</span>
+<span class="detail-value" id="popupSize">-</span>
+</div>
+<div class="detail-row">
+<span class="detail-label">Jumlah:</span>
+<span class="detail-value" id="popupQuantity">-</span>
+</div>
+<div class="order-total">
+<span>Total:</span>
+<span id="popupTotal">Rp 0</span>
+</div>
+</div>
+<div class="order-message">
+<i class="fas fa-clock"></i> Pesanan Anda akan segera diproses
+</div>
+</div>
+<button id="chatbot-btn"><i class="fas fa-comment-dots"></i> Chat dengan CS</button>
+<div id="chatbot-box">
+<div id="chat-header">
+<span>Customer Service AVR</span>
+<button class="close-btn" onclick="toggleChat()">×</button>
+</div>
+<div id="chat-body"></div>
+<div id="chat-input">
+<input type="text" id="chat-text" placeholder="Tulis pesan..." onkeypress="handleKeyPress(event)">
+<button onclick="sendMsg()">Kirim</button>
+</div>
+</div>
+<footer id="tentang">
+<div class="footer-content">
+<h3>AVR Footwear & Apparel</h3>
+<p>Kualitas Premium untuk Gaya Terbaik Anda</p>
+<div class="copyright">
+<p>© 2025 AVR Footwear & Apparel. Semua Hak Dilindungi.</p>
+</div>
+</div>
+</footer>
+<script>
+const products={shoes:[{id:1,name:"AVR Runner X",price:499000,colors:['Hitam','Putih','Abu-abu'],sizes:['39','40','41','42','43'],image:'https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',category:'Running'},{id:2,name:"AVR Street Core",price:539000,colors:['Hitam','Putih','Merah'],sizes:['40','41','42','43'],image:'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',category:'Casual'},{id:3,name:"AVR SportFlex",price:569000,colors:['Putih','Biru','Hitam'],sizes:['39','40','41','42'],image:'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',category:'Sports'},{id:4,name:"AVR Casual Pro",price:429000,colors:['Coklat','Hitam','Putih'],sizes:['39','40','41','42'],image:'https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',category:'Casual'},{id:5,name:"AVR Urban Sneaker",price:459000,colors:['Putih','Hitam','Abu-abu'],sizes:['39','40','41','42','43'],image:'https://images.unsplash.com/photo-1600269452121-4f2416e55c28?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',category:'Sneakers'},{id:6,name:"AVR Training Max",price:589000,colors:['Hitam','Biru','Merah'],sizes:['40','41','42','43'],image:'https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',category:'Training'}],apparel:[{id:7,name:"Kaos Premium AVR",price:179000,colors:['Hitam','Putih','Abu-abu','Navy'],sizes:['S','M','L','XL'],image:'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',category:'Kaos'},{id:8,name:"Hoodie AVR Essential",price:289000,colors:['Hitam','Abu-abu','Navy'],sizes:['M','L','XL'],image:'https://images.unsplash.com/photo-1556821840-3a63f95609a7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',category:'Hoodie'},{id:9,name:"Kemeja Casual AVR",price:229000,colors:['Putih','Biru muda','Abu-abu'],sizes:['S','M','L','XL'],image:'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',category:'Kemeja'},{id:10,name:"Jaket AVR Sport",price:349000,colors:['Hitam','Navy','Hijau Army'],sizes:['M','L','XL'],image:'https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',category:'Jaket'},{id:11,name:"Celana Training AVR",price:199000,colors:['Hitam','Abu-abu','Navy'],sizes:['S','M','L','XL'],image:'https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',category:'Celana'},{id:12,name:"Topi AVR Cap",price:89000,colors:['Hitam','Putih','Navy'],sizes:['One Size'],image:'https://images.unsplash.com/photo-1588850561407-ed78c282e89b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',category:'Topi'}]};
+let cart=JSON.parse(localStorage.getItem('avrCart'))||[];let currentOrder=null;
+const shoesGrid=document.getElementById('shoesGrid'),apparelGrid=document.getElementById('apparelGrid'),cartCount=document.getElementById('cartCount'),mobileMenuBtn=document.getElementById('mobileMenuBtn'),mainNav=document.getElementById('mainNav'),orderPopup=document.getElementById('orderPopup'),overlay=document.getElementById('overlay'),navLinks=document.querySelectorAll('nav a');
+function formatPrice(price){return`Rp ${price.toLocaleString('id-ID')}`}
+function renderProducts(){
+shoesGrid.innerHTML='';products.shoes.forEach(p=>{const c=document.createElement('div');c.className='product-card';c.innerHTML=`<div class="product-img"><img src="${p.image}" alt="${p.name}" loading="lazy"></div><div class="product-info"><h3 class="product-name">${p.name}</h3><p style="color:#666;font-size:0.9rem;margin-bottom:10px;">${p.category}</p><div class="product-price">${formatPrice(p.price)}</div><div class="product-actions"><button class="btn-chat" onclick="chatbotProductInquiry('${p.name}')">Tanya</button><button class="btn-buy" onclick="openOrderForm(${p.id},'shoes')">Beli</button></div></div>`;shoesGrid.appendChild(c)});
+apparelGrid.innerHTML='';products.apparel.forEach(p=>{const c=document.createElement('div');c.className='product-card';c.innerHTML=`<div class="product-img"><img src="${p.image}" alt="${p.name}" loading="lazy"></div><div class="product-info"><h3 class="product-name">${p.name}</h3><p style="color:#666;font-size:0.9rem;margin-bottom:10px;">${p.category}</p><div class="product-price">${formatPrice(p.price)}</div><div class="product-actions"><button class="btn-chat" onclick="chatbotProductInquiry('${p.name}')">Tanya</button><button class="btn-buy" onclick="openOrderForm(${p.id},'apparel')">Beli</button></div></div>`;apparelGrid.appendChild(c)})}
+function openOrderForm(e,t){let o;o='shoes'===t?products.shoes.find(p=>p.id===e):products.apparel.find(p=>p.id===e);currentOrder={product:o.name,price:o.price,color:o.colors[0],size:o.sizes[0],quantity:1};showOrderPopup()}
+function showOrderPopup(){if(!currentOrder)return;document.getElementById('popupProduct').textContent=currentOrder.product;document.getElementById('popupColor').textContent=currentOrder.color;document.getElementById('popupSize').textContent=currentOrder.size;document.getElementById('popupQuantity').textContent=currentOrder.quantity;document.getElementById('popupTotal').textContent=formatPrice(currentOrder.price*currentOrder.quantity);orderPopup.style.display='block';overlay.style.display='block';setTimeout(()=>{orderPopup.style.display==='block'&&closeOrderPopup()},5000)}
+function closeOrderPopup(){orderPopup.style.display='none';overlay.style.display='none';currentOrder&&(cart.push(currentOrder),localStorage.setItem('avrCart',JSON.stringify(cart)),updateCartCount(),currentOrder=null)}
+function updateCartCount(){const e=cart.reduce((e,t)=>e+t.quantity,0);cartCount.textContent=e}
+mobileMenuBtn.addEventListener('click',()=>{mainNav.classList.toggle('active')});navLinks.forEach(e=>{e.addEventListener('click',()=>{mainNav.classList.remove('active')})});document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener('click',function(e){e.preventDefault();const t=this.getAttribute('href');if('#'.includes(t))return;const o=document.querySelector(t);o&&window.scrollTo({top:o.offsetTop-70,behavior:'smooth'})})});
+function updateActiveNav(){const e=window.scrollY+100;document.querySelectorAll('section').forEach(t=>{const o=t.offsetTop,c=t.clientHeight,d=t.getAttribute('id');if(e>=o&&e<o+c){navLinks.forEach(e=>{e.classList.remove('active');e.getAttribute('href')===`#${d}`&&e.classList.add('active')})}})}overlay.addEventListener('click',()=>{orderPopup.style.display='none';overlay.style.display='none'});document.addEventListener('DOMContentLoaded',()=>{renderProducts();updateCartCount();updateActiveNav()});window.addEventListener('scroll',updateActiveNav);
+const chatBtn=document.getElementById("chatbot-btn"),chatBox=document.getElementById("chatbot-box"),chatBody=document.getElementById("chat-body"),chatText=document.getElementById("chat-text");
+function toggleChat(){if("flex"===chatBox.style.display)chatBox.style.display="none";else{chatBox.style.display="flex";chatText.focus();0===chatBody.children.length&&initChat()}}chatBtn.addEventListener("click",toggleChat);function addTimeStamp(){const e=new Date,t=e.getHours().toString().padStart(2,'0')+':'+e.getMinutes().toString().padStart(2,'0'),o=document.createElement("div");o.className="chat-time";o.textContent=t;chatBody.appendChild(o)}function addBot(e,t=null){let o=document.createElement("div");o.className="bot-msg";o.innerHTML=`<div>${e}</div>`;chatBody.appendChild(o);t&&showQuickMenu(t);chatBody.scrollTop=chatBody.scrollHeight}function addUser(e){let t=document.createElement("div");t.className="user-msg";t.innerHTML=`<div>${e}</div>`;chatBody.appendChild(t);chatBody.scrollTop=chatBody.scrollHeight}function sendMsg(){let e=chatText.value.trim();if(!e)return;addTimeStamp();addUser(e);chatText.value="";setTimeout(()=>{processUserMessage(e)},300)}function handleKeyPress(e){"Enter"===e.key&&sendMsg()}function showQuickMenu(e){let t=document.createElement("div");t.className="quick-questions";e.forEach(e=>{let o=document.createElement("button");o.textContent=e;o.onclick=()=>{addTimeStamp();addUser(e);processUserMessage(e)};t.appendChild(o)});chatBody.appendChild(t);chatBody.scrollTop=chatBody.scrollHeight}function chatbotProductInquiry(e){toggleChat();setTimeout(()=>{addTimeStamp();addUser(`Tanya tentang ${e}`);processUserMessage(`produk ${e}`)},500)}function findProductInMessage(e){const t=e.toLowerCase();let o=null;const c=[...products.shoes,...products.apparel];for(const e of c){const c=e.name.toLowerCase();if(t.includes(c)){o=e.name;break}const d=c.split(' ');for(const c of d)if(c.length>3&&t.includes(c)){o=e.name;break}if(o)break}return o}function processUserMessage(e){const t=e.toLowerCase(),o=findProductInMessage(e);if(o){const t=[...products.shoes,...products.apparel],c=t.find(t=>t.name===o);if(c){if(t.includes('harga')||t.includes('berapa')||t.includes('price'))addBot(`Harga ${o}: ${formatPrice(c.price)}\n\nWarna yang tersedia: ${c.colors.join(', ')}\nUkuran: ${c.sizes.join(', ')}`,[`Cek stok ${o}`,`Warna ${o}`,`Ukuran ${o}`]);else if(t.includes('warna')||t.includes('color')||t.includes('colour'))addBot(`Warna yang tersedia untuk ${o}: ${c.colors.join(', ')}\n\nHarga: ${formatPrice(c.price)}\nUkuran: ${c.sizes.join(', ')}`, [`Harga ${o}`,`Cek stok ${o}`,`Ukuran ${o}`]);else if(t.includes('ukuran')||t.includes('size')||t.includes('sizes'))addBot(`Ukuran yang tersedia untuk ${o}: ${c.sizes.join(', ')}\n\nHarga: ${formatPrice(c.price)}\nWarna: ${c.colors.join(', ')}`, [`Harga ${o}`,`Warna ${o}`,`Cek stok ${o}`]);else if(t.includes('stok')||t.includes('stock')||t.includes('tersedia'))handleStockQuery(e,o);else addBot(`${o}:\n\nHarga: ${formatPrice(c.price)}\nWarna: ${c.colors.join(', ')}\nUkuran: ${c.sizes.join(', ')}\nKategori: ${c.category}\n\nAda yang ingin ditanyakan tentang produk ini?`,[`Harga ${o}`,`Warna ${o}`,`Ukuran ${o}`,`Cek stok ${o}`])}}else if(t.includes('stok')||t.includes('stock'))handleStockQuery(e);else if(t.includes('warna')||t.includes('color'))handleColorQuery(e);else if(t.includes('pengiriman')||t.includes('ongkir')||t.includes('ongkos'))addBot(`Info Pengiriman:\n\n- Gratis ongkir untuk pembelian di atas Rp 600.000\n- Reguler: 3-5 hari kerja (Rp 15.000)\n- Express: 1-2 hari kerja (Rp 25.000)\n- COD tersedia di Jabodetabek, Bandung, Surabaya\n- Pengiriman ke seluruh Indonesia`,['Cara Tracking','Biaya ke kota saya','Waktu pengiriman']);else if(t.includes('pembayaran')||t.includes('bayar')||t.includes('transfer'))addBot(`Metode Pembayaran:\n\n- Transfer Bank (BCA, Mandiri, BRI)\n- E-Wallet (OVO, GoPay, Dana)\n- Credit Card (Visa, MasterCard)\n- COD (Cash On Delivery)\n- Retail Outlet (Alfamart, Indomaret)\n\nSemua pembayaran aman dengan sistem terverifikasi.`,['Cara bayar COD','Konfirmasi pembayaran','Invoice pembelian']);else if(t.includes('promo')||t.includes('diskon')||t.includes('sale'))addBot(`Promo & Diskon Terbaru:\n\n- FREE ONGKIR untuk semua pembelian di atas Rp 600.000\n- Diskon 10% untuk pembelian 2 sepatu\n- Bundle Deal: Kaos + Sepatu = Diskon 15%\n- Member Baru: Voucher Rp 50.000 (min. beli Rp 300.000)\n\nPromo berlaku sampai 30 November 2024.`,['Syarat promo','Kode voucher','Promo member']);else if(t.includes('pesan')||t.includes('beli')||t.includes('order'))addBot(`Cara Pemesanan:\n\n1. Klik tombol "Beli" pada produk\n2. Pilih ukuran dan warna\n3. Konfirmasi pesanan\n4. Pilih metode pengiriman & pembayaran\n5. Terima konfirmasi order\n\nUntuk pemesanan, bisa langsung klik tombol "Beli" di produk yang diinginkan.`,['Cek stok produk','Ukuran yang tersedia','Proses setelah bayar']);else if(t.includes('halo')||t.includes('hai')||t.includes('hi')||t.includes('assalamualaikum'))addBot(`Halo! Selamat datang di AVR Footwear & Apparel. Ada yang bisa saya bantu?`,['Lihat Produk','Cek Promo','Info Pengiriman','Bantuan Ukuran']);else{const e=document.createElement("div");e.className="admin-contact";e.innerHTML=`Maaf, saya belum paham pertanyaan Anda. Silakan hubungi Admin kami langsung di:<br><a href="https://wa.me/6281234567890" target="_blank">0812-3456-7890</a> (WhatsApp)`;addBot("Maaf, saya belum paham pertanyaan Anda. Saya Hanya Melayani Terkait Produk Yang Tersedia di Toko Kami");chatBody.appendChild(e);chatBody.scrollTop=chatBody.scrollHeight}}function handleStockQuery(e,t=null){let o=t;o||(o=findProductInMessage(e));if(o){const e=[...products.shoes,...products.apparel],t=e.find(e=>e.name===o);if(t){const e={};t.colors.forEach(t=>{e[t]=Math.floor(15*Math.random())+5});let c=`Stok ${o}:\n\n`;for(const[t,o]of Object.entries(e))c+=`- ${t}: ${o} pcs\n`;c+=`\nUntuk info real-time stok per ukuran, sebutkan warna yang diinginkan.`;addBot(c,t.colors.map(e=>`Stok ${e}`))}}else addBot(`Untuk cek stok, bisa sebutkan nama produknya dulu.\nContoh: "Stok AVR Runner X" atau "Cek stok kaos"`,['Stok AVR Runner X','Stok Kaos Premium','Stok semua sepatu'])}function handleColorQuery(e){const t=findProductInMessage(e);if(t){const e=[...products.shoes,...products.apparel],o=e.find(e=>e.name===t);o&&addBot(`Warna ${t}:\n\nTersedia: ${o.colors.join(', ')}\n\nWarna mana yang ingin Anda ketahui stoknya?`,o.colors.map(e=>`Warna ${e}`))}else addBot(`Setiap produk punya variasi warna berbeda. Produk mana yang ingin Anda cek warnanya?`,['Warna sepatu','Warna kaos','Warna hoodie'])}function initChat(){setTimeout(()=>{addTimeStamp();addBot(`Halo! Selamat datang di AVR Footwear & Apparel. Ada yang bisa saya bantu?`);setTimeout(()=>{showQuickMenu(['Lihat Produk','Cek Promo','Info Pengiriman','Bantuan Ukuran'])},500)},300)}setInterval(()=>{chatBody.scrollHeight-chatBody.scrollTop<500&&(chatBody.scrollTop=chatBody.scrollHeight)},100);window.addEventListener('load',initChat);
+</script>
+</body>
+</html>
